@@ -22,5 +22,3 @@ for DAY in "${DAYS[@]}"; do
     fi
   done
 done
-
-
