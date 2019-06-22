@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Download KubeCon + CloudNativeCon Europe 2019 presentations from Sched
+# Download KubeCon + CloudNativeCon + Open Source Summit China 2019 presentations from Sched
 # Forked https://gist.github.com/hobbsh/35091c54970fff0b86a64cd72f02e8e3
 
 DAYS=("2019-06-24" "2019-06-25" "2019-06-26")
