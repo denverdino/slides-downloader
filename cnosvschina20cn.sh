@@ -3,7 +3,7 @@
 # Download KubeCon + CloudNativeCon Europe 2019 presentations from Sched
 # Forked https://gist.github.com/hobbsh/35091c54970fff0b86a64cd72f02e8e3
 
-DAYS=("2020-07-30" "2020-07-31" "2020-08-1")
+DAYS=("2020-07-30" "2020-07-31" "2020-08-01")
 EVENT=cnosvschina20cn
 SCHED_URL=https://${EVENT}.sched.com
 
