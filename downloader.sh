@@ -11,6 +11,7 @@ for DAY in "${DAYS[@]}"; do
     echo "Requesting ${SCHED_URL}/${LINK}"
     FILE_URLS=$(curl -s ${SCHED_URL}/${LINK} | grep "file-uploaded" | cut -d\" -f 4)
     if [ -n "${FILE_URLS}" ]; then
+      FILE_URLS=$(printf "%s\n" "${FILE_URLS[@]}" | sort -u)
       ITER=0
       for FILE_URL in $FILE_URLS; do
         if [ "$ITER" -eq "0" ]; then
