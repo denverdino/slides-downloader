@@ -19,6 +19,11 @@ for DAY in "${DAYS[@]}"; do
         else
           FILEPATH="${EVENT}/${DAY}/$(echo "${LINK}" | cut -d/ -f3)-${ITER}.${FILE_URL##*.}"
         fi
+        FILEEXT=${FILEPATH##*.}
+        if [[ "$FILEEXT" == "txt" ]]; then
+          echo "Skip downloaded file ${FILEPATH}"
+          continue
+        fi
         if [[ ! -f "${FILEPATH}" ]]; then
           echo "Downloading ${FILEPATH} from ${FILE_URL}"
           curl --retry 3 --retry-delay 3 -o "${FILEPATH}" -s "${FILE_URL}"
