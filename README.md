@@ -2,6 +2,7 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon Europe 2021 with Co-Located Events](kubecon-eu-21-all.sh)
 * [KubeCon + CloudNativeCon North America 2020 Virtual](kccncna20.sh)
 * [OpenTelemetry Community Day North America 2020](otcdna20.sh)
 * [ServiceMeshCon North America 2020](smcna20.sh)
