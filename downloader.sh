@@ -14,15 +14,17 @@ for DAY in "${DAYS[@]}"; do
       FILE_URLS=$(printf "%s\n" "${FILE_URLS[@]}" | sort -u)
       ITER=0
       for FILE_URL in $FILE_URLS; do
-        if [ "$ITER" -eq "0" ]; then
-          FILEPATH="${EVENT}/${DAY}/$(echo "${LINK}" | cut -d/ -f3).${FILE_URL##*.}"
-        else
-          FILEPATH="${EVENT}/${DAY}/$(echo "${LINK}" | cut -d/ -f3)-${ITER}.${FILE_URL##*.}"
-        fi
-        FILEEXT=${FILEPATH##*.}
-        if [[ "$FILEEXT" == "txt" ]]; then
-          echo "Skip downloaded file ${FILEPATH}"
+        FILENAME=${FILE_URL##*/}
+        FILEEXT=${FILENAME##*.}
+        # Ignore plain text transcript files
+        if [[ "$FILEEXT" == "txt" ]] || [[ $FILENAME == Plain_Text_Transcript_* ]]; then
+          echo "Skip downloaded ${FILE_URL}"
           continue
+        fi
+        if [ "$ITER" -eq "0" ]; then
+          FILEPATH="${EVENT}/${DAY}/$(echo "${LINK}" | cut -d/ -f3).${FILEEXT}"
+        else
+          FILEPATH="${EVENT}/${DAY}/$(echo "${LINK}" | cut -d/ -f3)-${ITER}.${FILEEXT}"
         fi
         if [[ ! -f "${FILEPATH}" ]]; then
           echo "Downloading ${FILEPATH} from ${FILE_URL}"
