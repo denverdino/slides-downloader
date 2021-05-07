@@ -2,7 +2,7 @@
 
 echo Start downloading all presentations from KubeCon + CloudNativeCon Europe 2021 ...
 
-sh -c "./cloudnativerustdayeu21.sh & \
+(trap 'kill 0' SIGINT;  ./cloudnativerustdayeu21.sh & \
 ./cloudnativewasmeu21.sh & \
 ./cnsecuritydayeu21.sh & \
 ./crossplanedayeu21.sh & \
@@ -12,7 +12,7 @@ sh -c "./cloudnativerustdayeu21.sh & \
 ./magmadayeu21.sh & \
 ./promcononline2021.sh & \
 ./servicemeshconeu21.sh & \
-./kccnceu2021.sh & \
-wait"
+./kccnceu2021.sh)
 
 echo Finish downloading 
+
