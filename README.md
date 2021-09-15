@@ -2,6 +2,8 @@
 
 Download slides from Sched
 
+* [GitOps Summit 2021](gitopssummit2021.sh)
+* [Continuous Delivery Foundation cdCon 2021](cdcon2021.sh)
 * [KubeCon + CloudNativeCon Europe 2021 with Co-Located Events](kubecon-eu-21-all.sh)
 * [KubeCon + CloudNativeCon North America 2020 Virtual](kccncna20.sh)
 * [OpenTelemetry Community Day North America 2020](otcdna20.sh)
