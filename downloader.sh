@@ -6,7 +6,9 @@ SCHED_URL=https://${EVENT}.sched.com
 
 for DAY in "${DAYS[@]}"; do
   mkdir -p "${EVENT}/${DAY}"
-  LINKS=($(curl -s ${SCHED_URL}/${DAY}/overview | grep -oEi "f='(.*)' cl" | cut -d\' -f 2 | tr '\n' ' '))
+  LINKS=($(curl --referer ${SCHED_URL} -s ${SCHED_URL}/${DAY}/overview | grep -oEi "f='(.*)' cl" | cut -d\' -f 2 | tr '\n' ' '))
+  echo "Requesting ${SCHED_URL}/${DAY}/overview"
+  echo "curl --referer ${SCHED_URL} -s ${SCHED_URL}/${DAY}/overview"
   for LINK in "${LINKS[@]}"; do
     echo "Requesting ${SCHED_URL}/${LINK}"
     FILE_URLS=$(curl -s ${SCHED_URL}/${LINK} | grep "file-uploaded" | cut -d\" -f 4)
