@@ -2,6 +2,9 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon Europe 2021 with Co-Located Events](kubecon-eu-21-all.sh)
+* [KubeCon + CloudNativeCon North America 2021](kccncna2021.sh)
+* [GitOpsCon North America 2021](gitopsconna21.sh)
 * [GitOps Summit 2021](gitopssummit2021.sh)
 * [Continuous Delivery Foundation cdCon 2021](cdcon2021.sh)
 * [KubeCon + CloudNativeCon Europe 2021 with Co-Located Events](kubecon-eu-21-all.sh)
