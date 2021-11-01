@@ -15,6 +15,7 @@ echo Start downloading all presentations from KubeCon + CloudNativeCon North Ame
 ./envoyconna21.sh & \
 ./kubernetesaidayna21.sh & \
 ./onesummit2021.sh & \
+./cloudnativedevxdayna21.sh & \
 ./kccncna2021.sh)
 
 echo Finish downloading 
