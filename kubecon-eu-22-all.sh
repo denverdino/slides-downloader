@@ -12,6 +12,8 @@ echo Start downloading all presentations from KubeCon + CloudNativeCon Europe 20
 ./cloudnativewasmdayeu22.sh & \
 ./kubernetesaidayeu22.sh & \
 ./kubernetesbatchdayeu22.sh & \
+./gitopsconeu22.sh & \
+./knativeconeu22.sh & \
 ./kccnceu2022.sh)
 
 echo Finish downloading
