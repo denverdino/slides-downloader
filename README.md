@@ -2,6 +2,8 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon Europe 2022 with Co-Located Events](kubecon-eu-22-all.sh)
+* [KubeCon + CloudNativeCon Europe 2022](kccnceu2022.sh)
 * [KubeCon + CloudNativeCon + Open Source Summit China 2021](kccncosschn21.sh)
 * [KubeCon + CloudNativeCon North America 2021 with Co-Located Events](kubecon-na-21-all.sh)
 * [KubeCon + CloudNativeCon North America 2021](kccncna2021.sh)
