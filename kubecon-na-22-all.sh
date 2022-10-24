@@ -3,6 +3,8 @@
 echo Start downloading all presentations from KubeCon + CloudNativeCon North America 2022 ...
 
 (trap 'kill 0' SIGINT; \
+./cloudnativetelcodayna22.sh & \
+./cloudnativesecurityconna22.sh & \
 ./kubernetesonedgedayna22.sh & \
 ./openobservabilitydayna22.sh & \
 ./servicemeshconna22.sh & \
