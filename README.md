@@ -2,6 +2,8 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon Europe 2023 with Co-Located Events](kubecon-eu-23-all.sh)
+* [KubeCon + CloudNativeCon Europe 2023](kccnceu2023.sh)
 * [CloudNativeSecurityCon 2023](cloudnativesecurityconna23.sh)
 * [KubeCon + CloudNativeCon North America 2022 with Co-Located Events](kubecon-na-22-all.sh)
 * [KubeCon + CloudNativeCon North America 2022](kccncna2022.sh)
