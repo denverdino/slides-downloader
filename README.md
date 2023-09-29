@@ -2,6 +2,10 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon + Open Source Summit China 2023](kccncosschn2023.sh)
+* [IstioCon 2023](istiocon2023.sh)
+* [IstioCon China 2023](istioconchina2023.sh)
+* [WASMCon 2023](wasmcon2023.sh)
 * [KubeCon + CloudNativeCon Europe 2023 with Co-Located Events](kubecon-eu-23-all.sh)
 * [KubeCon + CloudNativeCon Europe 2023](kccnceu2023.sh)
 * [CloudNativeSecurityCon 2023](cloudnativesecurityconna23.sh)
