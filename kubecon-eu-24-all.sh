@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo Start downloading all presentations from KubeCon + CloudNativeCon Europe 2023 ...
+echo Start downloading all presentations from KubeCon + CloudNativeCon Europe 2024...
 
 (trap 'kill 0' SIGINT; \
 ./colocatedeventseu2024.sh & \
