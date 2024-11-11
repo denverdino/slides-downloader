@@ -3,6 +3,7 @@
 Download slides from Sched
 
 * [KubeCon + CloudNativeCon North America 2024](kccncna2024.sh)
+* [KubeCon + CloudNativeCon North America 2024 with Co-Located Events](kubecon-na-24-all.sh)
 * [KubeCon + CloudNativeCon + Open Source Summit + AI_dev China 2024](kccncossaidevchn2024.sh)
 * [KubeCon + CloudNativeCon Europe 2024 with Co-Located Events](kubecon-eu-24-all.sh)
 * [KubeCon + CloudNativeCon North America 2023 with Co-Located Events](kubecon-na-23-all.sh)
