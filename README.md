@@ -2,6 +2,7 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon Europe 2026](kccnceu2026.sh)
 * [KubeCon + CloudNativeCon North America 2025](kccncna2025.sh)
 * [KubeCon + CloudNativeCon China 2025](kccncchn2025.sh)
 * [KubeCon + CloudNativeCon Europe 2025](kccnceu2025.sh)
