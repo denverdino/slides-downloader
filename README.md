@@ -2,6 +2,7 @@
 
 Download slides from Sched
 
+* [KubeCon + CloudNativeCon + OpenInfra Summit + PyTorch Conference China 2026](download_kubecon_cn_slides.py)
 * [KubeCon + CloudNativeCon Europe 2026](kccnceu2026.sh)
 * [KubeCon + CloudNativeCon North America 2025](kccncna2025.sh)
 * [KubeCon + CloudNativeCon China 2025](kccncchn2025.sh)
