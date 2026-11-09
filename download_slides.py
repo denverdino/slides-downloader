@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 
-# Download slides for KubeCon + CloudNativeCon + OpenInfra Summit + PyTorch Conference China
-# from the lfopensource.cn schedule page (sessions with uploaded slides).
+# Download slides from a Linux Foundation event schedule page that lists
+# sessions with uploaded slides (sessionize download links).
+#
+# Layout: <event>/<YYYY-MM-DD>/<sanitized-title>.<ext>
 
+import argparse
 import html
 import re
 import time
 import urllib.request
 from pathlib import Path
 
-SCHEDULE_URL = (
-    "https://www.lfopensource.cn/kubecon-cloudnativecon-openinfra-summit-pytorch-conference-china"
-    "/program/schedule/?slides=uploaded"
-)
-EVENT = "kubecon-cloudnativecon-openinfra-summit-pytorch-conference-china"
-BASE_DIR = Path(__file__).resolve().parent / EVENT
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+SESSIONIZE_LINK = re.compile(r'href="(https://sessionize\.com/download/[^"]+)"')
 
 
 def fetch(url, retries=3):
@@ -48,37 +46,37 @@ def parse_sessions(page):
         date_match = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})T', part)
         if not title_match or not date_match:
             continue
-        urls = [
-            u for u in re.findall(r'href="(https://sessionize\.com/download/[^"]+)"', part)
-            if u not in seen
-        ]
+        urls = [u for u in SESSIONIZE_LINK.findall(part) if u not in seen]
         seen.update(urls)
         if urls:
             sessions.append((date_match.group(1), title_match.group(1).strip(), urls))
     return sessions
 
 
-def main():
-    print(f"Fetching schedule: {SCHEDULE_URL}")
-    page = fetch(SCHEDULE_URL).decode("utf-8", errors="replace")
-    sessions = parse_sessions(page)
+def download_event(event, schedule_url, base_dir=None):
+    base_dir = Path(base_dir) if base_dir else Path(__file__).resolve().parent / event
+    print(f"Fetching schedule: {schedule_url}")
+    sessions = parse_sessions(fetch(schedule_url).decode("utf-8", errors="replace"))
     print(f"Found {len(sessions)} sessions with slides")
 
-    downloaded = failed = 0
+    downloaded = skipped = failed = 0
     for date, title, urls in sessions:
         print(f"\n[{date}] {html.unescape(title)}")
-        out_dir = BASE_DIR / date
+        out_dir = base_dir / date
         out_dir.mkdir(parents=True, exist_ok=True)
         name = sanitize(title)
         for index, url in enumerate(urls):
             filename = url.rsplit("~", 1)[-1]
-            ext = filename.rsplit(".", 1)[-1] if "." in filename else "pdf"
+            ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else "pdf"
+            if not ext.isalnum():
+                ext = "pdf"
             suffix = "" if index == 0 else f"-{index + 1}"
             dest = out_dir / f"{name}{suffix}.{ext}"
             if dest.exists() and dest.stat().st_size > 0:
-                print(f"  Skip (exists): {dest.relative_to(BASE_DIR)}")
+                print(f"  Skip (exists): {dest.relative_to(base_dir)}")
+                skipped += 1
                 continue
-            print(f"  Downloading: {dest.relative_to(BASE_DIR)}")
+            print(f"  Downloading: {dest.relative_to(base_dir)}")
             try:
                 dest.write_bytes(fetch(url))
                 downloaded += 1
@@ -86,7 +84,19 @@ def main():
                 failed += 1
                 dest.unlink(missing_ok=True)
                 print(f"  FAILED: {exc}")
-    print(f"Done. {downloaded} downloaded, {failed} failed.")
+    print(f"\nDone. {downloaded} downloaded, {skipped} skipped, {failed} failed.")
+    return 1 if failed else 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("url", help="event page URL, e.g. https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/")
+    parser.add_argument("--output-dir", help="output directory (default: last path segment of the URL)")
+    args = parser.parse_args()
+    base_url = args.url.rstrip("/") + "/"
+    schedule_url = base_url + "program/schedule/?slides=uploaded"
+    event = args.output_dir or base_url.rstrip("/").rsplit("/", 1)[-1]
+    raise SystemExit(download_event(event, schedule_url, args.output_dir))
 
 
 if __name__ == "__main__":
