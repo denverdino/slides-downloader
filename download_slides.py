@@ -11,9 +11,23 @@ import re
 import time
 import urllib.request
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 SESSIONIZE_LINK = re.compile(r'href="(https://sessionize\.com/download/[^"]+)"')
+
+
+def normalize_schedule_url(url):
+    """Accept an event root or a schedule page, preserving other filters."""
+    parts = urlsplit(url)
+    path = parts.path.rstrip("/")
+    slug = path.rsplit("/", 1)[-1].lower()
+    # LF uses both /program/schedule/ and named co-located *-schedule/ pages.
+    if slug != "schedule" and not slug.endswith("-schedule"):
+        path += "/program/schedule"
+    query = [(key, value) for key, value in parse_qsl(parts.query, keep_blank_values=True) if key != "slides"]
+    query.append(("slides", "uploaded"))
+    return urlunsplit((parts.scheme, parts.netloc, path + "/", urlencode(query), ""))
 
 
 def fetch(url, retries=3):
@@ -54,7 +68,7 @@ def parse_sessions(page):
 
 
 def download_event(event, schedule_url, base_dir=None):
-    base_dir = Path(base_dir) if base_dir else Path(__file__).resolve().parent / event
+    base_dir = Path(event) if not base_dir else Path(base_dir)
     print(f"Fetching schedule: {schedule_url}")
     sessions = parse_sessions(fetch(schedule_url).decode("utf-8", errors="replace"))
     print(f"Found {len(sessions)} sessions with slides")
@@ -72,11 +86,12 @@ def download_event(event, schedule_url, base_dir=None):
                 ext = "pdf"
             suffix = "" if index == 0 else f"-{index + 1}"
             dest = out_dir / f"{name}{suffix}.{ext}"
+            shown = dest.relative_to(Path.cwd()) if dest.is_relative_to(Path.cwd()) else dest
             if dest.exists() and dest.stat().st_size > 0:
-                print(f"  Skip (exists): {dest.relative_to(base_dir)}")
+                print(f"  Skip (exists): {shown}")
                 skipped += 1
                 continue
-            print(f"  Downloading: {dest.relative_to(base_dir)}")
+            print(f"  Downloading: {shown}")
             try:
                 dest.write_bytes(fetch(url))
                 downloaded += 1
@@ -90,12 +105,11 @@ def download_event(event, schedule_url, base_dir=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("url", help="event page URL, e.g. https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/")
+    parser.add_argument("url", help="event home page or full schedule URL, e.g. https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/")
     parser.add_argument("--output-dir", help="output directory (default: last path segment of the URL)")
     args = parser.parse_args()
-    base_url = args.url.rstrip("/") + "/"
-    schedule_url = base_url + "program/schedule/?slides=uploaded"
-    event = args.output_dir or base_url.rstrip("/").rsplit("/", 1)[-1]
+    schedule_url = normalize_schedule_url(args.url)
+    event = args.output_dir or urlsplit(args.url).path.rstrip("/").rsplit("/", 1)[-1]
     raise SystemExit(download_event(event, schedule_url, args.output_dir))
 
 

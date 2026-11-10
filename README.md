@@ -1,8 +1,9 @@
 # slides-downloader
 
-Download slides from Sched
+Download slides from Sched and Linux Foundation event schedules.
 
 * [KubeCon + CloudNativeCon North America 2026](kccncna2026.sh)
+* [KubeCon + CloudNativeCon North America 2026 Co-located Events](kccncna-colocated-2026.sh)
 * [KubeCon + CloudNativeCon + OpenInfra Summit + PyTorch Conference China 2026](kccncchn2026.sh)
 * [KubeCon + CloudNativeCon Europe 2026](kccnceu2026.sh)
 * [KubeCon + CloudNativeCon North America 2025](kccncna2025.sh)
@@ -44,3 +45,15 @@ Download slides from Sched
 * [Cloud Native Security Day Europe 2020](cnsdeu20.sh)
 
 I am lazy to list the others :-)
+
+For Linux Foundation schedules, `download_slides.py` accepts either an event home
+page or a full schedule URL, including co-located schedules:
+
+```sh
+./download_slides.py https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/
+./kccncna-colocated-2026.sh --output-dir kccncna-colocated-2026
+```
+
+Existing URL filters are preserved, and `slides=uploaded` is set automatically.
+Slides are saved under `<output-dir>/<YYYY-MM-DD>/`; the default output directory
+is the last path segment of the supplied URL.
